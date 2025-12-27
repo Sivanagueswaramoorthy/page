@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Nunmai Technology</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { 
+            --primary: #09cbd6; 
+            --primary-glow: rgba(9, 203, 214, 0.4); 
+            --dark: #0f172a; 
+            --glass: rgba(255, 255, 255, 0.75); 
+            --bg: #f8fafc; 
+            --header-height: 80px; 
+            --accent-soft: rgba(9, 203, 214, 0.1);
+        }
+        
+        html, body { 
+            margin: 0; 
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden; 
+        }
+
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: var(--dark); min-height: 100vh; }
+        
+        /* Background Decorations */
+        .bg-clip-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .glow-sphere { 
+            position: absolute; 
+            bottom: -10%; 
+            right: -5%; 
+            width: 500px; 
+            height: 500px; 
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%); 
+            border-radius: 50%; 
+            filter: blur(60px); 
+            animation: float 10s infinite alternate; 
+        }
+
+        @keyframes float { 0% { transform: translateY(0); } 100% { transform: translateY(-40px); } }
+
+        /* Header */
+        header { position: fixed; top: 0; width: 100%; height: var(--header-height); z-index: 1000; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; }
+        .header-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--dark); text-decoration: none; }
+        .logo span { color: var(--primary); }
+        .nav { position: relative; display: flex; gap: 5px; }
+        .nav-link { color: #64748b; font-weight: 600; font-size: 0.95rem; padding: 8px 16px; text-decoration: none; border-radius: 10px; transition: 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--dark); background: rgba(0,0,0,0.04); }
+        .nav-indicator { position: absolute; bottom: -8px; height: 3px; background: var(--primary); border-radius: 10px; transition: 0.4s; }
+
+        /* Content Sections */
+        .page-content { padding-top: 150px; padding-bottom: 100px; animation: fadeInUp 0.8s ease-out; }
+        
+        .section-tag { color: var(--primary); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: block; }
+
+        /* Contact Details Card */
+        .info-panel { padding: 20px; }
+        .contact-item { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 24px; 
+            margin-bottom: 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 20px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        }
+        .contact-item:hover { transform: translateX(10px); border-color: var(--primary); }
+        .icon-box { 
+            width: 60px; 
+            height: 60px; 
+            background: var(--accent-soft); 
+            color: var(--primary); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 18px; 
+            font-size: 1.5rem; 
+        }
+        .contact-text h5 { margin: 0; font-size: 1rem; font-weight: 700; color: #64748b; }
+        .contact-text p { margin: 0; font-size: 1.1rem; font-weight: 600; color: var(--dark); }
+
+        /* Form Card */
+        .form-card { 
+            background: var(--glass); 
+            border: 1px solid rgba(255,255,255,0.5); 
+            padding: 40px; 
+            border-radius: 35px; 
+            backdrop-filter: blur(15px); 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
+        }
+        .form-control { 
+            border-radius: 15px; 
+            border: 2px solid transparent; 
+            padding: 15px 20px; 
+            background: rgba(255,255,255,0.8);
+            transition: 0.3s;
+        }
+        .form-control:focus { 
+            box-shadow: none; 
+            border-color: var(--primary); 
+            background: white; 
+        }
+        .btn-send { 
+            background: var(--dark); 
+            color: white; 
+            border: none; 
+            padding: 18px; 
+            border-radius: 18px; 
+            font-weight: 700; 
+            width: 100%; 
+            transition: 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-send:hover { background: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 20px var(--primary-glow); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 991px) {
+            .page-content { padding-top: 120px; }
+            .info-panel { margin-bottom: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-clip-wrapper">
+        <div class="glow-sphere"></div>
+    </div>
+
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Nun<span>mai.</span></a>
+            <nav class="nav" id="mainNav">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="events.html">Events</a>
+                <a class="nav-link" href="service.html">Services</a>
+                <a class="nav-link active" href="contact.html">Contact</a>
+                <div class="nav-indicator" id="navIndicator"></div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container page-content">
+        <div class="row align-items-center">
+            <div class="col-lg-5 info-panel">
+                <span class="section-tag">Contact Us</span>
+                <h1 class="fw-800 mb-4" style="font-weight: 800; font-size: 3rem;">Get in <span style="color: var(--primary);">Touch.</span></h1>
+                <p class="text-muted mb-5">Have a question or looking to collaborate? Reach out to our team and let's build something extraordinary together.</p>
+                
+                <div class="contact-item">
+                    <div class="icon-box">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h5>Email Us</h5>
+                        <p>hello@nunmai.tech</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="icon-box">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h5>Call Us</h5>
+                        <p>+1 (555) 000-1234</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="icon-box">
+                        <i class="fas fa-location-dot"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h5>Visit Us</h5>
+                        <p>Tech Hub, Innovation City</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="form-card">
+                    <form id="suggestionForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-600 small">Full Name</label>
+                                <input type="text" class="form-control" placeholder="John Doe" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-600 small">Email Address</label>
+                                <input type="email" class="form-control" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-600 small">Your Message</label>
+                            <textarea class="form-control" rows="5" placeholder="How can we help you?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-send" id="sendBtn">
+                            Send Message
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Navigation Indicator Logic
+        const nav = document.getElementById('mainNav');
+        const indicator = document.getElementById('navIndicator');
+        function moveIndicator(el) { 
+            if(el) { 
+                indicator.style.width = `${el.offsetWidth - 20}px`; 
+                indicator.style.left = `${el.offsetLeft + 10}px`; 
+            } 
+        }
+        window.addEventListener('load', () => moveIndicator(document.querySelector('.nav-link.active')));
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('mouseenter', () => moveIndicator(link));
+        });
+        nav.addEventListener('mouseleave', () => moveIndicator(document.querySelector('.nav-link.active')));
+
+        // Form Submission Animation
+        document.getElementById('suggestionForm').addEventListener('submit', function(e) { 
+            e.preventDefault(); 
+            const btn = document.getElementById('sendBtn'); 
+            btn.innerHTML = 'Message Sent! <i class="fas fa-check ms-2"></i>'; 
+            btn.style.background = '#22c55e'; 
+            btn.style.boxShadow = '0 10px 20px rgba(34, 197, 94, 0.3)';
+            this.reset(); 
+        });
+    </script>
+</body>
+</html>
